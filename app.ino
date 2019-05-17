@@ -1,11 +1,20 @@
+#define PIR_SENSOR D1
+
 void setup()
 {
+  pinMode(PIR_SENSOR, INPUT);
+  pinMode(LED_BUILTIN, LOW);
 }
 
 void loop()
 {
-  pinMode(LED_BUILTIN, HIGH);
-  delay(500);
-  pinMode(LED_BUILTIN, LOW);
+  if (PIR_SENSOR == HIGH)
+  {
+    digitalWrite(LED_BUILTIN, HIGH);
+  }
+  else
+  {
+    digitalWrite(LED_BUILTIN, LOW);
+  }
   delay(500);
 }
