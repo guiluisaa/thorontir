@@ -1,20 +1,24 @@
-#define PIR_SENSOR D1
+#define PIR 5 // GPIO05, Digital Pin D1
+#define LED 4 // GPIO04, Digital Pin D2
 
 void setup()
 {
-  pinMode(PIR_SENSOR, INPUT);
-  pinMode(LED_BUILTIN, LOW);
+  pinMode(PIR, INPUT);
+  pinMode(LED, OUTPUT);
+  Serial.begin(115200);
 }
 
 void loop()
 {
-  if (PIR_SENSOR == HIGH)
+  int trigger = digitalRead(PIR);
+
+  if (trigger)
   {
-    digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(LED, HIGH);
   }
   else
   {
-    digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(LED, LOW);
   }
   delay(500);
 }
