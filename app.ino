@@ -4,7 +4,6 @@
 #include <ESP8266WiFi.h>
 const char *ssid = "ergil";        // SSID
 const char *password = "senha123"; // password
-const char *host = "www.handsontec.com";
 
 void setup()
 {
