@@ -5,8 +5,9 @@
 const char *ssid = "ergil";        // SSID
 const char *password = "senha123"; // password
 
-void setup()
-{
+int hasSomeone = LOW;
+
+void setup() {
   pinMode(PIR, INPUT);
   pinMode(LED, OUTPUT);
   Serial.begin(115200);
@@ -15,16 +16,8 @@ void setup()
 
   Serial.println();
   Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
-
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
+  
+  connectWiFi();
 
   Serial.println("");
   Serial.println("WiFi connected");
@@ -32,17 +25,34 @@ void setup()
   Serial.println(WiFi.localIP());
 }
 
-void loop()
-{
+void loop() {
   int trigger = digitalRead(PIR);
 
-  if (trigger)
-  {
+  if (trigger) {
     digitalWrite(LED, HIGH);
-  }
-  else
-  {
+    if(hasSomeone == LOW) {
+      Serial.println("Start moving");
+      hasSomeone = HIGH;
+    }
+  } else {
     digitalWrite(LED, LOW);
+    if(hasSomeone == HIGH) {
+      Serial.println("Stop moving");
+      hasSomeone = LOW;
+    }
   }
-  delay(500);
+  
+  delay(100);
+}
+
+void connectWiFi() {
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
 }
